@@ -7,14 +7,17 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name="tb_cozinha")
-public class  Cozinha {
-
-    @EqualsAndHashCode.Include
+@Table(name = "tb_cidade")
+public class Cidade {
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="nome_cozinha", length = 50)
     private String nome;
+
+    @ManyToOne
+    @JoinColumn(name = "estado_id")
+    private Estado estado;
+
 }
