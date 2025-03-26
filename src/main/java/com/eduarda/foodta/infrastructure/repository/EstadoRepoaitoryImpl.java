@@ -4,9 +4,10 @@ import com.eduarda.foodta.domain.model.Estado;
 import com.eduarda.foodta.domain.repository.EstadoRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 public class EstadoRepoaitoryImpl implements EstadoRepository {
     @PersistenceContext
     private EntityManager manager;
