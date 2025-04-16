@@ -2,12 +2,11 @@ package com.eduarda.foodta.api.controller;
 
 import com.eduarda.foodta.domain.model.Estado;
 import com.eduarda.foodta.domain.repository.EstadoRepository;
+import com.eduarda.foodta.domain.service.EstadoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
@@ -15,6 +14,9 @@ import java.util.List;
 public class EstadoController {
     @Autowired
     private EstadoRepository estadoRepository;
+
+    @Autowired
+    private EstadoService estadoService;
 
     @GetMapping
     public List<Estado> listar() {
@@ -30,4 +32,21 @@ public class EstadoController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    public Estado adicionar(@RequestBody Estado estado){
+        return  estadoService.salvar(estado);
+    }
+
+    @PutMapping("/{estadoId}")
+    public ResponseEntity<Estado> atualizar(@PathVariable Long estadoId, @RequestBody Estado estado){
+        Estado estadoAtual = estadoRepository.buscar(estadoId);
+
+        if (estadoAtual != null){
+            BeanUtils.copyProperties(estado, estadoAtual, "id");
+            estadoAtual = estadoService.salvar(estadoAtual);
+            return  ResponseEntity.ok(estadoAtual);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }

@@ -1,13 +1,14 @@
 package com.eduarda.foodta.api.controller;
 
+import com.eduarda.foodta.domain.model.Cozinha;
 import com.eduarda.foodta.domain.model.FormaPagamento;
 import com.eduarda.foodta.domain.repository.FormaPagamentoRepository;
+import com.eduarda.foodta.domain.service.FormaPagamentoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ import java.util.List;
 public class FormaPagamentoController {
     @Autowired
     private FormaPagamentoRepository formaPagamentoRepository;
+
+    private FormaPagamentoService formaPagamentoService;
 
     @GetMapping
     public List<FormaPagamento> listar(){
@@ -31,4 +34,23 @@ public class FormaPagamentoController {
         }
         return  ResponseEntity.notFound().build();
     }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public FormaPagamento adicionar(@RequestBody FormaPagamento formaPagamento){
+        return formaPagamentoRepository.salvar(formaPagamento);
+    }
+
+    @PutMapping("/{formaPagamantoId}")
+    public ResponseEntity<FormaPagamento> atualizar(@PathVariable Long formaPagamentoId, @RequestBody FormaPagamento formaPagamento){
+        FormaPagamento formaPagamentoAtual = formaPagamentoRepository.buscar(formaPagamentoId);
+
+        if (formaPagamentoId != null){
+            BeanUtils.copyProperties(formaPagamento, formaPagamentoAtual, "id");
+            formaPagamentoAtual = formaPagamentoService.salvar(formaPagamentoAtual);
+            return ResponseEntity.ok(formaPagamentoAtual);
+        }
+        return  ResponseEntity.notFound().build();
+    }
+
 }
