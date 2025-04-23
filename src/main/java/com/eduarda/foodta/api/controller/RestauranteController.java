@@ -1,5 +1,7 @@
 package com.eduarda.foodta.api.controller;
 
+import com.eduarda.foodta.domain.excepition.EntidadeEmUsoExcepition;
+import com.eduarda.foodta.domain.excepition.EntidadeNaoEncontradaExcepition;
 import com.eduarda.foodta.domain.model.Cozinha;
 import com.eduarda.foodta.domain.model.Restaurante;
 import com.eduarda.foodta.domain.repository.RestauranteRespository;
@@ -51,6 +53,20 @@ public class RestauranteController {
             return ResponseEntity.ok(restauranteAtual);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{restauranteId}")
+    public ResponseEntity<Cozinha> remover(@PathVariable Long restauranteId){
+        try{
+            restauranteService.excluir(restauranteId);
+            return ResponseEntity.notFound().build();
+        }
+        catch (EntidadeNaoEncontradaExcepition e){
+            return ResponseEntity.notFound().build();
+        }
+        catch (EntidadeEmUsoExcepition e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
 }

@@ -1,5 +1,7 @@
 package com.eduarda.foodta.api.controller;
 
+import com.eduarda.foodta.domain.excepition.EntidadeEmUsoExcepition;
+import com.eduarda.foodta.domain.excepition.EntidadeNaoEncontradaExcepition;
 import com.eduarda.foodta.domain.model.Cidade;
 import com.eduarda.foodta.domain.repository.CidadeRepository;
 import com.eduarda.foodta.domain.service.CidadeService;
@@ -52,5 +54,19 @@ public class CidadeController {
         }
         return ResponseEntity.notFound().build();
 
+    }
+
+    @DeleteMapping("/{cidadeId}")
+    public ResponseEntity<Cidade> remover(@PathVariable Long cidadeId){
+        try{
+            cidadeService.excluir(cidadeId);
+            return ResponseEntity.notFound().build();
+        }
+        catch (EntidadeNaoEncontradaExcepition e){
+            return ResponseEntity.notFound().build();
+        }
+        catch (EntidadeEmUsoExcepition e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 }
