@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -25,32 +26,33 @@ public class RestauranteController {
 
     @GetMapping
     public List<Restaurante> listar(){
-        return restauranteRespository.listar();
+        return restauranteRespository.findAll();
     }
 
+    @GetMapping("/{restaurnateId}")
     public ResponseEntity<Restaurante> buscar(@PathVariable Long restauranteId){
-        Restaurante restaurante = restauranteRespository.buscar(restauranteId);
+        Optional<Restaurante> restaurante = restauranteRespository.findById(restauranteId);
 
-        if (restaurante != null){
-            return  ResponseEntity.ok(restaurante);
+        if (restaurante.isPresent()){
+            return  ResponseEntity.ok(restaurante.get());
         }
         return ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Restaurante adicionar(@RequestBody Restaurante restaurante){
-        return restauranteService.salvar(restaurante);
+    public ResponseEntity<Restaurante> adicionar(@RequestBody Restaurante restaurante){
+        restaurante = restauranteService.salvar(restaurante);
+        return ResponseEntity.status(HttpStatus.CREATED).body(restaurante);
     }
 
     @PutMapping("/{restauranteId}")
     public ResponseEntity<Restaurante> atualizar(@PathVariable Long restauranteId, @RequestBody Restaurante restaurante){
-        Restaurante restauranteAtual = restauranteRespository.buscar(restauranteId);
+        Optional<Restaurante> restauranteAtual = restauranteRespository.findById(restauranteId);
 
-        if ( restauranteAtual != null){
+        if ( restauranteAtual.isPresent()){
             BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
-            restauranteAtual = restauranteService.salvar(restauranteAtual);
-            return ResponseEntity.ok(restauranteAtual);
+            Restaurante restauranteSalvar = restauranteService.salvar(restauranteAtual.get());
+            return ResponseEntity.ok(restauranteSalvar);
         }
         return ResponseEntity.notFound().build();
     }

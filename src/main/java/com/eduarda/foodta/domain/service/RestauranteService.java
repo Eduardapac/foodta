@@ -14,18 +14,18 @@ public class RestauranteService {
     private RestauranteRespository restauranteRespository;
 
     public Restaurante salvar(Restaurante restaurante){
-        return restauranteRespository.salvar(restaurante);
+        return restauranteRespository.save(restaurante);
     }
 
     public void excluir(Long id) {
         try {
-            RestauranteRespository.remover(id);
+            restauranteRespository.deleteById(id);
         }
         catch (DataIntegrityViolationException e) {
-            throw new EntidadeEmUsoExcepition(String.format("Estado ou código %d não pode ser removida, pois está em uso.", id));
+            throw new EntidadeEmUsoExcepition(String.format("Restaurante ou código %d não pode ser removida, pois está em uso.", id));
         }
         catch (EmptyResultDataAccessException e) {
-            throw new EntidadeNaoEncontradaExcepition(String.format("Não existe cadastro de estado %d", id));
+            throw new EntidadeNaoEncontradaExcepition(String.format("Não existe cadastro de restaurante %d", id));
         }
     }
 }
