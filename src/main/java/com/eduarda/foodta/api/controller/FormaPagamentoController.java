@@ -1,8 +1,7 @@
 package com.eduarda.foodta.api.controller;
 
-import com.eduarda.foodta.domain.excepition.EntidadeEmUsoExcepition;
-import com.eduarda.foodta.domain.excepition.EntidadeNaoEncontradaExcepition;
-import com.eduarda.foodta.domain.model.Cozinha;
+import com.eduarda.foodta.domain.exception.EntidadeEmUsoException;
+import com.eduarda.foodta.domain.exception.EntidadeNaoEncontradaException;
 import com.eduarda.foodta.domain.model.FormaPagamento;
 import com.eduarda.foodta.domain.repository.FormaPagamentoRepository;
 import com.eduarda.foodta.domain.service.FormaPagamentoService;
@@ -62,10 +61,10 @@ public class FormaPagamentoController {
             formaPagamentoService.excluir(formaPagamentoId);
             return ResponseEntity.notFound().build();
         }
-        catch (EntidadeNaoEncontradaExcepition e){
+        catch (EntidadeNaoEncontradaException e){
             return ResponseEntity.notFound().build();
         }
-        catch (EntidadeEmUsoExcepition e){
+        catch (EntidadeEmUsoException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }

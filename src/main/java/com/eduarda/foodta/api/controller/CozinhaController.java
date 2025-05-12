@@ -1,13 +1,12 @@
 package com.eduarda.foodta.api.controller;
 
-import com.eduarda.foodta.domain.excepition.EntidadeEmUsoExcepition;
-import com.eduarda.foodta.domain.excepition.EntidadeNaoEncontradaExcepition;
+import com.eduarda.foodta.domain.exception.EntidadeEmUsoException;
+import com.eduarda.foodta.domain.exception.EntidadeNaoEncontradaException;
 import com.eduarda.foodta.domain.model.Cozinha;
 import com.eduarda.foodta.domain.repository.CozinhaRepository;
 import com.eduarda.foodta.domain.service.CozinhaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,10 +61,10 @@ public class CozinhaController {
             cozinhaService.excluir(cozinhaId);
             return ResponseEntity.notFound().build();
         }
-        catch (EntidadeNaoEncontradaExcepition e){
+        catch (EntidadeNaoEncontradaException e){
             return ResponseEntity.notFound().build();
         }
-        catch (EntidadeEmUsoExcepition e){
+        catch (EntidadeEmUsoException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }

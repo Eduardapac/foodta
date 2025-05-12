@@ -1,7 +1,7 @@
 package com.eduarda.foodta.domain.service;
 
-import com.eduarda.foodta.domain.excepition.EntidadeEmUsoExcepition;
-import com.eduarda.foodta.domain.excepition.EntidadeNaoEncontradaExcepition;
+import com.eduarda.foodta.domain.exception.EntidadeEmUsoException;
+import com.eduarda.foodta.domain.exception.EntidadeNaoEncontradaException;
 import com.eduarda.foodta.domain.model.Estado;
 import com.eduarda.foodta.domain.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,9 @@ public class EstadoService {
         try {
             estadoRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new EntidadeEmUsoExcepition(String.format("Estado ou código %d não pode ser removida, pois está em uso.", id));
+            throw new EntidadeEmUsoException(String.format("Estado ou código %d não pode ser removida, pois está em uso.", id));
         } catch (EmptyResultDataAccessException e) {
-            throw new EntidadeNaoEncontradaExcepition(String.format("Não existe cadastro de estado %d", id));
+            throw new EntidadeNaoEncontradaException(String.format("Não existe cadastro de estado %d", id));
         }
     }
 }

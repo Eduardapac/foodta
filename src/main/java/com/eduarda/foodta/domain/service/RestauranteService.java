@@ -1,7 +1,7 @@
 package com.eduarda.foodta.domain.service;
 
-import com.eduarda.foodta.domain.excepition.EntidadeEmUsoExcepition;
-import com.eduarda.foodta.domain.excepition.EntidadeNaoEncontradaExcepition;
+import com.eduarda.foodta.domain.exception.EntidadeEmUsoException;
+import com.eduarda.foodta.domain.exception.EntidadeNaoEncontradaException;
 import com.eduarda.foodta.domain.model.Restaurante;
 import com.eduarda.foodta.domain.repository.RestauranteRespository;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,10 +22,10 @@ public class RestauranteService {
             restauranteRespository.deleteById(id);
         }
         catch (DataIntegrityViolationException e) {
-            throw new EntidadeEmUsoExcepition(String.format("Restaurante ou código %d não pode ser removida, pois está em uso.", id));
+            throw new EntidadeEmUsoException(String.format("Restaurante ou código %d não pode ser removida, pois está em uso.", id));
         }
         catch (EmptyResultDataAccessException e) {
-            throw new EntidadeNaoEncontradaExcepition(String.format("Não existe cadastro de restaurante %d", id));
+            throw new EntidadeNaoEncontradaException(String.format("Não existe cadastro de restaurante %d", id));
         }
     }
 }

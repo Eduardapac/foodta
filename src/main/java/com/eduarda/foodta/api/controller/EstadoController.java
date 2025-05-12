@@ -1,7 +1,7 @@
 package com.eduarda.foodta.api.controller;
 
-import com.eduarda.foodta.domain.excepition.EntidadeEmUsoExcepition;
-import com.eduarda.foodta.domain.excepition.EntidadeNaoEncontradaExcepition;
+import com.eduarda.foodta.domain.exception.EntidadeEmUsoException;
+import com.eduarda.foodta.domain.exception.EntidadeNaoEncontradaException;
 import com.eduarda.foodta.domain.model.Estado;
 import com.eduarda.foodta.domain.repository.EstadoRepository;
 import com.eduarda.foodta.domain.service.EstadoService;
@@ -62,10 +62,10 @@ public class EstadoController {
             estadoService.excluir(estadoId);
             return ResponseEntity.notFound().build();
         }
-        catch (EntidadeNaoEncontradaExcepition e){
+        catch (EntidadeNaoEncontradaException e){
             return ResponseEntity.notFound().build();
         }
-        catch (EntidadeEmUsoExcepition e){
+        catch (EntidadeEmUsoException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
