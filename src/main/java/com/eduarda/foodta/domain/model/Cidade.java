@@ -1,5 +1,6 @@
 package com.eduarda.foodta.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,6 +17,7 @@ public class Cidade {
 
     private String nome;
 
+    //@JsonIgnore
     @ManyToOne
     @JoinColumn(name = "estado_id")
     private Estado estado;

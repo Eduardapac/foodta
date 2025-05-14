@@ -1,5 +1,6 @@
 package com.eduarda.foodta.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,7 +23,8 @@ private String nome;
 @Column(name="taxa_frete")
 private BigDecimal taxaFrete;
 
-@ManyToOne
+//@JsonIgnore
+@ManyToOne(fetch = FetchType.LAZY)
 @JoinColumn(name="cozinha_id")
 private Cozinha cozinha;
 }
