@@ -38,7 +38,7 @@ create table produto(
     primary key (id)
 )engine=InnoDB default charset=utf8;
 
-create table resataurante(
+create table restaurante(
     id bigint not null auto_increment,
     cozinha_id bigint not null,
     nome varchar(80) not null,

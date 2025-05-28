@@ -38,7 +38,7 @@ create table produto(
     primary key (id)
 )engine=InnoDB default charset=utf8;
 
-create table resataurante(
+create table restaurante(
     id bigint not null auto_increment,
     cozinha_id bigint not null,
     nome varchar(80) not null,
@@ -75,10 +75,13 @@ create table usuario(
 
 create table usuario_grupo(
     usuario_id bigint not null,
-    grupo_id bigint not null.
+    grupo_id bigint not null,
 
     primary key (usuario_id, grupo_id)
 )engine=InnoDB default charset=utf8;
+
+alter table cidade add constraint fk_cidade_estado
+foreign key (estado_id) references estado (id);
 
 alter table grupo_permissao add constraint fk_grupo_permissao_permissao
 foreign key (permissao_id) references permissao (id);

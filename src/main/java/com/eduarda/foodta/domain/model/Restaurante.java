@@ -27,4 +27,7 @@ private BigDecimal taxaFrete;
 @ManyToOne(fetch = FetchType.LAZY)
 @JoinColumn(name="cozinha_id")
 private Cozinha cozinha;
+
+@Embedded
+private Endereco endereco;
 }
