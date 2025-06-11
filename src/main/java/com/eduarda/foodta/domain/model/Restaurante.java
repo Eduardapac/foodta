@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -22,6 +24,13 @@ private String nome;
 
 @Column(name="taxa_frete")
 private BigDecimal taxaFrete;
+
+@Column(name = "data_atualizacao", columnDefinition = "datetime")
+private LocalDateTime dataCadastro;
+
+@UpdateTimestamp
+@Column(name = "data-atualizacao", columnDefinition = "datetime")
+private LocalDateTime dataAtualização;
 
 //@JsonIgnore
 @ManyToOne(fetch = FetchType.LAZY)

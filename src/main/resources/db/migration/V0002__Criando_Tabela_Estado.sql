@@ -1,4 +1,4 @@
-create Table estado(
+create Table tb_estado(
     id bigint not null auto_increment,
     nome varchar(80) not null,
 
