@@ -35,8 +35,8 @@ private BigDecimal taxaFrete;
 private LocalDateTime dataCadastro;
 
 @UpdateTimestamp
-@Column(name = "data-atualizacao", columnDefinition = "datetime")
-private LocalDateTime dataAtualização;
+@Column(name = "data_atualizacao", columnDefinition = "datetime")
+private LocalDateTime dataAtualizacao;
 
 //@JsonIgnore
 @ManyToOne(fetch = FetchType.LAZY)
