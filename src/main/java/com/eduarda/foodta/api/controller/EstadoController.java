@@ -69,5 +69,4 @@ public class EstadoController {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
-
 }
